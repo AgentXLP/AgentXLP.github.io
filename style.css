@@ -1,0 +1,41 @@
+h1 {
+    font-family: Tahoma, sans-serif;
+    font-size: 100px;
+    left: 0;
+    line-height: 200px;
+    margin-top: -350px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+    color: white;
+}
+p {
+    font-family: sans-serif;
+    left: 0;
+    line-height: 200px;
+    margin-top: -270px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+    font-size: 22px;
+    color:white;
+    font-style: oblique;
+}
+body {
+    background-color: rgb(112, 33, 112);
+}
+a {
+    font-family: sans-serif;
+    font-size: 25px;
+    color: white;
+    text-align: center;
+    left: 0;
+    line-height: 200px;
+    margin-top: -200px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+}
