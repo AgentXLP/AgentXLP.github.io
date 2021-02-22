@@ -1,5 +1,6 @@
 h1 {
-    font-family: Tahoma, sans-serif;
+    font-style: strong;
+    font-family: "Courier New", Courier, monospace;
     font-size: 100px;
     left: 0;
     line-height: 200px;
@@ -11,7 +12,7 @@ h1 {
     color: white;
 }
 p {
-    font-family: sans-serif;
+    font-family: "Courier New", Courier, monospace;
     left: 0;
     line-height: 200px;
     margin-top: -270px;
@@ -24,10 +25,10 @@ p {
     font-style: oblique;
 }
 body {
-    background-color: rgb(49, 63, 92);
+    background-image: linear-gradient(rgb(0, 110, 255), rgb(18, 66, 155));
 }
 a {
-    font-family: sans-serif;
+    font-family: "Courier New", Courier, monospace;
     font-size: 30px;
     color: white;
     text-align: center;
