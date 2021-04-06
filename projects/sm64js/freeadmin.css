@@ -17,6 +17,7 @@ p {
 }
 body {
     background-image: linear-gradient(rgb(0, 110, 255), rgb(82, 18, 155));
+    background-repeat: no-repeat;
     text-align: center;
 }
 a {
