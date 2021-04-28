@@ -1,0 +1,119 @@
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @license  MIT
+ */
+
+/*!
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <http://feross.org>
+ * @license  MIT
+ */
+
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
+/*! keydrown - v1.2.7 - 2020-10-01 - http://jeremyckahn.github.com/keydrown */
+
+/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+
+/**
+ * @license
+ * Lodash <https://lodash.com/>
+ * Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/**
+ * @license Complex.js v2.0.12 11/02/2016
+ *
+ * Copyright (c) 2016, Robert Eisele (robert@xarg.org)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ **/
+
+/**
+ * @license Fraction.js v4.0.12 09/09/2015
+ * http://www.xarg.org/2014/03/rational-numbers-in-javascript/
+ *
+ * Copyright (c) 2015, Robert Eisele (robert@xarg.org)
+ * Dual licensed under the MIT or GPL Version 2 licenses.
+ **/
+
+//! (BLJ's) This properly handles long jumps from getting forward speed with
+
+//! (Exposed Ceilings) Because any point above a ceiling counts
+
+//! (OOB Object Crash) TRUNC overflow exception after 36 minutes
+
+//! (Obj Position Crash) If you got an object with height past 2^31, the game would crash.
+
+//! (Speed Crash) These casts can cause a crash if (dYaw * forwardVel / 12) or
+
+//! (Unreferenced Walls) Since this only returns the first four walls,
+
+//! (Wall Overlaps) Because this doesn't update the x and z local variables,
+
+//! (forwardVel * 170) exceed or equal 2^31.
+
+//! -0x4000 not handled - can slide down a slope while facing perpendicular to it
+
+//! 10k glitch
+
+//! @BUG Doesn't check for the vertical wind death floor.
+
+//! Because some objects allow these active flags to be set but don't
+
+//! By strategically hitting a wall, steep slope, or another goomba, we can
+
+//! Can overshoot if |*value| > 1/(dragStrength * 0.0001)
+
+//! Crash if mario's referenced ceiling is NULL (same for other hanging actions)
+
+//! Doesn't update mario's referenced floor (allows oob death when
+
+//! Heave hos have the grabbable interaction type but are not normally
+
+//! If Mario is near OOB, these floorY's can sometimes be -11000.
+
+//! If OBJ_MOVE_13 tracks bouncing, it overestimates, since velY
+
+//! If one object moves after collisions are detected and this code
+
+//! If we move outside the goomba's drawing radius the frame it enters the
+
+//! If you press B to throw the shell, there is a ~5 frame window
+
+//! In Mario mode, the camera is zoomed out further than in lakitu mode (1400 vs 1200)
+
+//! It seems theoretically possible to get 2-3 goombas to repeatedly touch
+
+//! Possible division by zero
+
+//! Since the search for floors starts at y + 160, we will sometimes grab
+
+//! Some wall checks are larger than the buffer, meaning wall checks can
+
+//! Speed is capped a frame late (butt slide HSG)
+
+//! This can happen even when the goomba is already in the air. It's
+
+//! This is attempting to use trig derivatives to rotate mario's speed.
+
+//! This makes the HOLP not update when the camera is far away, and it
+
+//! Uncapped air speed. Net positive when moving forward.
+
+//! Water ceiling downwarp
+
+//! We only handle floor collision if the object does not enter
+
+//! When the wall is not completely vertical or there is a slight wall
