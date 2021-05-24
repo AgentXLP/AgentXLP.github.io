@@ -27,7 +27,7 @@ if(SelectedLVL("lvlMus") == "mus_none") {
   console.log("Audio set to none")
 }
 else {
-  let mus = new Audio('../audio/' + SelectedLVL("lvlMus") + '.mp3')
+  let mus = new Audio('./audio/' + SelectedLVL("lvlMus") + '.mp3')
   mus.addEventListener('ended', function() { // Thanks @kingjeffrey on stackoverflow for FF loop support!
     this.currentTime = 0
     this.play()
