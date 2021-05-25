@@ -29,6 +29,8 @@ export const SelectedLVL = (req) => {
             return selected_lvl[2]
         case "pos":
             return selected_lvl[3]
+        case "col":
+            return selected_lvl[4]
         default:
             throw "Unimplemented data " + req
     }
