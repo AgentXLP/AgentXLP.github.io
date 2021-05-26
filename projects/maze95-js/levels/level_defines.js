@@ -1,25 +1,20 @@
 import { maze_entry } from "./maze/script.js"
-import { redroom_entry } from "./redroom/script.js"
+import { bigroom_entry } from "./bigroom/script.js"
 
 function lvlEntry() {
-    let select = prompt("Type level name\nmaze").toLowerCase()
+    var select = document.getElementById("lvlSel")
+    var selectedVal = select.options[select.selectedIndex].value
 
-    switch(select) {
+    switch (selectedVal) {
         case "maze":
             return maze_entry
-        case "redroom":
-            return redroom_entry
-        case null:
-            return maze_entry
-        default:
-            alert("Unknown level, going to maze.")
-            return maze_entry
+        case "bigroom":
+            return bigroom_entry
     }
 }
 
-let selected_lvl = lvlEntry()
-
 export const SelectedLVL = (req) => {
+    let selected_lvl = lvlEntry()
     switch(req) {
         case "lvlName":
             return selected_lvl[0]
@@ -31,6 +26,8 @@ export const SelectedLVL = (req) => {
             return selected_lvl[3]
         case "col":
             return selected_lvl[4]
+        case "ambLightIntensity":
+            return selected_lvl[5]
         default:
             throw "Unimplemented data " + req
     }

@@ -22,7 +22,7 @@ const camera = new THREE.PerspectiveCamera(60,width/height)
 let green = new THREE.MeshBasicMaterial({color: 0x248000})
 let red = new THREE.MeshBasicMaterial({color: 0xfc0303})
 
-const faceTexture = new THREE.TextureLoader().load("./textures/end.png")
+const faceTexture = new THREE.TextureLoader().load("./textures/fin.png")
 let face = new THREE.MeshStandardMaterial({map: faceTexture, transparent: true})
 
 let col = SelectedLVL("col")
@@ -61,7 +61,7 @@ function redraw() {
   renderer.render(scene, camera)
 }
 
-const spd = 0.85
+let spd = 0
 
 function collisionCheck() {
   let inc = 0
@@ -73,23 +73,42 @@ function collisionCheck() {
   return false
 } //Credits to @luphoria for help with implementing the collision (broken because I am braindead as of now)
 
-const loader = new GLTFLoader();
-loader.load(SelectedLVL("lvlDir"), function (gltf) {
-	scene.add(gltf.scene)
-})
+var startLis = document.getElementById("start")
 
-let playergeo = new THREE.BoxGeometry(10,10,10)
+startLis.onclick = function startGame() {
+  document.getElementById("start").disabled = true
+  spd = 0.85
+  loadMap()
+}
+
+var resetButton = document.getElementById("reset")
+
+resetButton.onclick = function resetGame() {
+  location.reload()
+}
+
+function loadMap() {
+  const loader = new GLTFLoader();
+  loader.load(SelectedLVL("lvlDir"), function (gltf) {
+  	scene.add(gltf.scene)
+  })
+  scene.add(faceObj)
+
+  const amb = new THREE.AmbientLight(0xffffff, SelectedLVL("ambLightIntensity"))
+  scene.add(amb)
+}
+
+let playergeo = new THREE.BoxGeometry(3,3,3)
 let player = new THREE.Mesh(playergeo,green)
 scene.add(player)
 
-const faceObj = new THREE.Mesh(
-  new THREE.BoxGeometry(28,28,0),
-  face
-)
-scene.add(faceObj)
-faceObj.position.x = 79.06862060467722
-faceObj.position.y = -2.5
-faceObj.position.z = -382.39951746882235
+  const faceObj = new THREE.Mesh(
+    new THREE.BoxGeometry(28,28,0),
+    face
+  )
+  faceObj.position.x = 79.06862060467722
+  faceObj.position.y = -2.5
+  faceObj.position.z = -382.39951746882235
 
 /*const testCube = new THREE.Mesh(
   new THREE.BoxGeometry(3,3,3),
@@ -162,9 +181,6 @@ scene.add(testCube8)
 testCube8.position.x = -14.056
 testCube8.position.y = 11.221
 testCube8.position.z = -41.3134*/
-
-const amb = new THREE.AmbientLight(0xffffff, 1.7)
-scene.add(amb)
 
 function rotateD(speed) {
   player.rotation.y -= speed
