@@ -1,33 +1,57 @@
 import * as THREE from './lib/three.module.js'
 import { GLTFLoader } from "./lib/GLTFLoader.js"
-import { SelectedLVL } from "./levels/level_defines.js"
 import "./lib/keydrown.min.js"
+import { SelectedLVL } from "./levels/level_defines.js"
 
+import { faceObj } from "./lib/object_defines.js"
+import { startObj } from "./lib/object_defines.js"
+
+//Canvas width and height to set if widescreen is set to false
 var width = 512
 var height = 384
 
-const widescreen = false //experimental
-
-if(widescreen == true) {
-  width = innerWidth
-  height = innerHeight
-}
-else {
-  width = 512
-  height = 384
-}
-
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(60,width/height)
+
 let green = new THREE.MeshBasicMaterial({color: 0x248000})
 let red = new THREE.MeshBasicMaterial({color: 0xfc0303})
 
-const faceTexture = new THREE.TextureLoader().load("./textures/fin.png")
-let face = new THREE.MeshStandardMaterial({map: faceTexture, transparent: true})
-
 let col = SelectedLVL("col")
 let dir = new THREE.Vector3()
+let spd = 0
+let playergeo = new THREE.BoxGeometry(3,3,3)
+let player = new THREE.Mesh(playergeo,green)
+
+var startLis = document.getElementById("start")
+
+scene.add(player)
 scene.add(camera)
+const widescreen = false //Experimental
+
+const ceilingTex = new THREE.TextureLoader().load("./textures/ceiling.png", function ( texture ) {
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping
+  texture.offset.set(0,0)
+  texture.repeat.set(40,30)
+})
+ceilingTex.magFilter = THREE.NearestFilter
+const ceilingMat = new THREE.MeshBasicMaterial({map: ceilingTex})
+
+const floorTex = new THREE.TextureLoader().load("./textures/floor.png", function ( texture ) {
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping
+  texture.offset.set(0,0)
+  texture.repeat.set(20,20)
+})
+floorTex.magFilter = THREE.NearestFilter
+const floorMat = new THREE.MeshBasicMaterial({map: floorTex})
+
+const floor = new THREE.Mesh(
+  new THREE.BoxGeometry(500,0.1,500),
+  floorMat
+)
+const ceiling = new THREE.Mesh(
+  new THREE.BoxGeometry(500,0.1,500),
+  ceilingMat
+)
 
 if(!SelectedLVL("lvlMus") == "mus_none") {
   let mus = new Audio('../audio/' + SelectedLVL("lvlMus") + '.mp3')
@@ -37,9 +61,11 @@ if(!SelectedLVL("lvlMus") == "mus_none") {
   }, false)
   mus.play()
 }
+
 const renderer = new THREE.WebGL1Renderer({
   canvas: document.querySelector('#bg'),
 })
+
 renderer.setPixelRatio(window.devicePixelRatio)
 if(widescreen == false) {
   renderer.setSize(width, height)
@@ -48,32 +74,40 @@ else {
   renderer.setSize(window.innerWidth, window.innerHeight)
 }
 
-function redraw() {
-  requestAnimationFrame(redraw)
-  player.getWorldDirection(dir)
-  camera.position.x = player.position.x
-  camera.position.y = player.position.y
-  camera.position.z = player.position.z
-  camera.rotation.y = player.rotation.y
-
-  faceObj.rotation.y = player.rotation.y
-
-  renderer.render(scene, camera)
+//Canvas width and height only used if widescreen is set to true
+const widesizes = {
+  width: window.innerWidth,
+  height: window.innerHeight
 }
 
-let spd = 0
+//Init widescreen functionality
+if(widescreen) {
+  width = innerWidth
+  height = innerHeight
+}
+else {
+  width = 512
+  height = 384
+}
 
-function collisionCheck() {
-  let inc = 0
-  while(col.length > inc) {
-      // The increment is per collision cube, it checks for collision on each coordinate for a cube, and if it does not return true then it will keep going to the next collision cube. //
-      if(player.position.x > col[inc][0] && player.position.x < col[inc][3] && player.position.z > col[inc][2] && player.position.z < col[inc][5]) return true
-      inc += 1
+//Dynamic scaling for widescreen
+window.addEventListener('resize', () =>
+{
+  if(widescreen)
+  {
+    // Update sizes
+    widesizes.width = window.innerWidth
+    widesizes.height = window.innerHeight
+
+    // Update camera
+    camera.aspect = widesizes.width / widesizes.height
+    camera.updateProjectionMatrix()
+
+    // Update renderer
+    renderer.setSize(widesizes.width, widesizes.height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   }
-  return false
-} //Credits to @luphoria for help with implementing the collision (broken because I am braindead as of now)
-
-var startLis = document.getElementById("start")
+})
 
 startLis.onclick = function startGame() {
   document.getElementById("start").disabled = true
@@ -92,95 +126,40 @@ function loadMap() {
   loader.load(SelectedLVL("lvlDir"), function (gltf) {
   	scene.add(gltf.scene)
   })
+  floor.position.set(0,-18,-215)
+  ceiling.position.set(0,12,-215)
+  scene.add(ceiling)
+  scene.add(floor)
   scene.add(faceObj)
+  scene.add(startObj)
 
   const amb = new THREE.AmbientLight(0xffffff, SelectedLVL("ambLightIntensity"))
   scene.add(amb)
 }
 
-let playergeo = new THREE.BoxGeometry(3,3,3)
-let player = new THREE.Mesh(playergeo,green)
-scene.add(player)
+function collisionCheck() {
+  let inc = 0
+  while(col.length > inc) {
+      // The increment is per collision cube, it checks for collision on each coordinate for a cube, and if it does not return true then it will keep going to the next collision cube. //
+      if(player.position.x > col[inc][0] && player.position.x < col[inc][3] && player.position.z > col[inc][2] && player.position.z < col[inc][5]) return true
+      inc += 1
+  }
+  return false
+} //Credits to @luphoria for help with implementing the collision (broken because I am braindead as of now)
 
-  const faceObj = new THREE.Mesh(
-    new THREE.BoxGeometry(28,28,0),
-    face
-  )
-  faceObj.position.x = 79.06862060467722
-  faceObj.position.y = -2.5
-  faceObj.position.z = -382.39951746882235
+function redraw() {
+  requestAnimationFrame(redraw)
+  player.getWorldDirection(dir)
+  camera.position.x = player.position.x
+  camera.position.y = player.position.y
+  camera.position.z = player.position.z
+  camera.rotation.y = player.rotation.y
 
-/*const testCube = new THREE.Mesh(
-  new THREE.BoxGeometry(3,3,3),
-  red
-)
-scene.add(testCube)
-testCube.position.x = 14.056
-testCube.position.y = -16.8789
-testCube.position.z = 14.0612
+  faceObj.rotation.y = player.rotation.y
+  startObj.rotation.y = player.rotation.y
 
-const testCube2 = new THREE.Mesh(
-  new THREE.BoxGeometry(3,3,3),
-  green
-)
-scene.add(testCube2)
-testCube2.position.x = 14.056
-testCube2.position.y = 11.221
-testCube2.position.z = 14.0612
-
-const testCube3 = new THREE.Mesh(
-  new THREE.BoxGeometry(3,3,3),
-  red
-)
-scene.add(testCube3)
-testCube3.position.x = -14.056
-testCube3.position.y = -16.8789
-testCube3.position.z = 14.0612
-
-const testCube4 = new THREE.Mesh(
-  new THREE.BoxGeometry(3,3,3),
-  green
-)
-scene.add(testCube4)
-testCube4.position.x = -14.056
-testCube4.position.y = 11.221
-testCube4.position.z = 14.0612
-
-const testCube5 = new THREE.Mesh(
-  new THREE.BoxGeometry(3,3,3),
-  red
-)
-scene.add(testCube5)
-testCube5.position.x = 14.056
-testCube5.position.y = -16.8789
-testCube5.position.z = -41.3134
-
-const testCube6 = new THREE.Mesh(
-  new THREE.BoxGeometry(3,3,3),
-  green
-)
-scene.add(testCube6)
-testCube6.position.x = 14.056
-testCube6.position.y = 11.221
-testCube6.position.z = -41.3134
-
-const testCube7 = new THREE.Mesh(
-  new THREE.BoxGeometry(3,3,3),
-  red
-)
-scene.add(testCube7)
-testCube7.position.x = -14.056
-testCube7.position.y = -16.8789
-testCube7.position.z = -41.3134
-
-const testCube8 = new THREE.Mesh(
-  new THREE.BoxGeometry(3,3,3),
-  green
-)
-scene.add(testCube8)
-testCube8.position.x = -14.056
-testCube8.position.y = 11.221
-testCube8.position.z = -41.3134*/
+  renderer.render(scene, camera)
+}
 
 function rotateD(speed) {
   player.rotation.y -= speed
@@ -223,7 +202,7 @@ kd.D.down(function(){rotateD(spd/18)})
           throw "you do not exist " + type // theoretically this should never be called
   }
 }
-
+commented out player controller that is supposed to work with collision
 // key input checks
 kd.W.down(function(){move("move",-spd)})
 kd.A.down(function(){move("rotate",spd)})

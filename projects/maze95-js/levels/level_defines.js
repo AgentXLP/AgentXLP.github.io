@@ -28,6 +28,10 @@ export const SelectedLVL = (req) => {
             return selected_lvl[4]
         case "ambLightIntensity":
             return selected_lvl[5]
+        case "finPos":
+            return selected_lvl[6]
+        case "startLogoPos":
+            return selected_lvl[7]
         default:
             throw "Unimplemented data " + req
     }
