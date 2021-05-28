@@ -2,6 +2,8 @@ import * as THREE from './lib/three.module.js'
 import { GLTFLoader } from "./lib/GLTFLoader.js"
 import "./lib/keydrown.min.js"
 import { SelectedLVL } from "./levels/level_defines.js"
+import { move } from "./lib/player_col.js"
+import { rotateA, rotateD, moveW, moveS } from "./lib/player_no_col.js"
 
 import { faceObj } from "./lib/object_defines.js"
 import { startObj } from "./lib/object_defines.js"
@@ -16,11 +18,12 @@ const camera = new THREE.PerspectiveCamera(60,width/height)
 let green = new THREE.MeshBasicMaterial({color: 0x248000})
 let red = new THREE.MeshBasicMaterial({color: 0xfc0303})
 
-let col = SelectedLVL("col")
 let dir = new THREE.Vector3()
-let spd = 0
-let playergeo = new THREE.BoxGeometry(3,3,3)
-let player = new THREE.Mesh(playergeo,green)
+var spd = 0
+window.spd = 0
+window.rotDiv = 17
+const playergeo = new THREE.BoxGeometry(3,3,3)
+export const player = new THREE.Mesh(playergeo,green)
 
 var startLis = document.getElementById("start")
 
@@ -45,11 +48,11 @@ floorTex.magFilter = THREE.NearestFilter
 const floorMat = new THREE.MeshBasicMaterial({map: floorTex})
 
 const floor = new THREE.Mesh(
-  new THREE.BoxGeometry(500,0.1,500),
+  new THREE.BoxGeometry(1000,0.1,1000),
   floorMat
 )
 const ceiling = new THREE.Mesh(
-  new THREE.BoxGeometry(500,0.1,500),
+  new THREE.BoxGeometry(1000,0.1,1000),
   ceilingMat
 )
 
@@ -111,7 +114,8 @@ window.addEventListener('resize', () =>
 
 startLis.onclick = function startGame() {
   document.getElementById("start").disabled = true
-  spd = 0.85
+  window.spd = 0.9
+  spd = 0.9
   loadMap()
 }
 
@@ -136,17 +140,6 @@ function loadMap() {
   const amb = new THREE.AmbientLight(0xffffff, SelectedLVL("ambLightIntensity"))
   scene.add(amb)
 }
-
-function collisionCheck() {
-  let inc = 0
-  while(col.length > inc) {
-      // The increment is per collision cube, it checks for collision on each coordinate for a cube, and if it does not return true then it will keep going to the next collision cube. //
-      if(player.position.x > col[inc][0] && player.position.x < col[inc][3] && player.position.z > col[inc][2] && player.position.z < col[inc][5]) return true
-      inc += 1
-  }
-  return false
-} //Credits to @luphoria for help with implementing the collision (broken because I am braindead as of now)
-
 function redraw() {
   requestAnimationFrame(redraw)
   player.getWorldDirection(dir)
@@ -154,35 +147,17 @@ function redraw() {
   camera.position.y = player.position.y
   camera.position.z = player.position.z
   camera.rotation.y = player.rotation.y
-
+  spd = window.spd
   faceObj.rotation.y = player.rotation.y
   startObj.rotation.y = player.rotation.y
 
   renderer.render(scene, camera)
 }
 
-function rotateD(speed) {
-  player.rotation.y -= speed
-}
-
-function rotateA(speed) {
-  player.rotation.y += speed
-}
-
-function moveW(speed) {
-  player.position.x += -Math.sin(player.rotation.y) * speed;
-  player.position.z += -Math.cos(player.rotation.y) * speed;
-}
-
-function moveS(speed) {
-	player.position.x -= -Math.sin(player.rotation.y) * speed;
-	player.position.z -= -Math.cos(player.rotation.y) * speed;
-}
-
 kd.W.down(function(){moveW(spd)})
-kd.A.down(function(){rotateA(spd/18)})
+kd.A.down(function(){rotateA(spd/window.rotDiv)})
 kd.S.down(function(){moveS(spd)})
-kd.D.down(function(){rotateD(spd/18)})
+kd.D.down(function(){rotateD(spd/window.rotDiv)})
 
 /*function move(type,speed) {
   switch(type) {
