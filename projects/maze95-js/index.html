@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="./index.css">
+    <title>Maze 95 JS</title>
+    <script type="module" src="./maze95.js"></script>
+    <meta content="Maze 95 JS" property="og:title">
+    <meta content="Recreation of the Windows 95 3D Maze screensaver but interactive as a game, it is in it's very early development stages and only the maze map is meant for testing model loading and is not final.">
+    <meta content="https://agent-11.github.io/projects/maze95-js/" property="og:url">
+    <meta content="https://agent-11.github.io/projects/maze95-js/textures/end.png" property="og:image">
+    <link rel="icon" type="image/png" href="https://agent-11.github.io/projects/maze95-js/textures/end.png"/>
+    <meta content="#941d15" data-react-helmet="true" name="theme-color">
+  </head>
+  <body>
+    <h1>Maze 95 JS</h1><br>
+    <button onclick="startGame()" id="start">Start Game</button><br>
+    <button onclick="resetGame()" id="reset">Reset Game</button><br>
+    <canvas id="bg"></canvas>
+    <label type="text">Select Level:</label>
+    <select id="lvlSel">
+      <option value="maze">Maze</option>
+      <option value="bigroom">Lobby (Test Map)</option>
+    </select>
+    <h2>Known Bugs:</h2><br>
+    <p>Collision is not fully implemented yet.</p><br>
+    <h2>Special Thanks To:</h2><br>
+    <a href="https://luphoria.github.io">luphoria</a><br>
+    <a href="https://youtu.be/lrYlVXm2ua4">luphoria's Discord account has been disabled</a>
+    <h2>
+      Libraries used:<br />
+      Three.js<br />
+      Keydrown
+    </h2>
+  </body>
+</html>

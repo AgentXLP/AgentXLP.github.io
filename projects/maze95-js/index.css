@@ -1,0 +1,56 @@
+@font-face {
+    font-family: ms-sans-serif;
+    src: url('lib/font/ms-sans-serif.otf');
+}
+
+body {
+    color: white;
+    background-color: rgb(1, 130, 129);
+    font-family: 'ms-sans-serif';
+    display: grid;
+    place-items: center;
+    text-align: center;
+}
+
+h1 {
+    color: yellow;
+}
+
+a {
+    color: rgb(255, 255, 50);
+    font-size: 20px;
+}
+
+label {
+    font-size: 20px;
+    color: deepskyblue;
+}
+
+button {
+    background-image: url("textures/button.png");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'ms-sans-serif';
+}
+
+select {
+    background-image: url("textures/button.png");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: 'ms-sans-serif';
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .example {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
