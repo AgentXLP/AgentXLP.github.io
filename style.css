@@ -1,0 +1,40 @@
+@font-face {
+  font-family: 'anb';
+  src: url('/assets/anb.otf');
+}
+
+@font-face {
+  font-family: 'rb';
+  src: url(/assets/roboto.ttf);
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+
+main {
+  font-size: 35px;
+  color: white;
+  position: absolute;
+
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+h1 {
+  margin: 30px;
+  font-family: 'rb';
+}
+
+a {
+  font-family: 'anb';
+  color: white;
+  margin: 40px;
+}
