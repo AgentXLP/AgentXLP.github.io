@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "event-emitter-es6": "./event-emitter-es6.js",
+    "socket.io-client": "./socket.io-client.js"
+  }
+}
