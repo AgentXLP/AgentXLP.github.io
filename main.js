@@ -1,6 +1,10 @@
 import * as THREE from "./lib/three.module.js"
 import { GLTFLoader } from "./lib/model_loader.js"
 
+window.hideText = function() {
+  document.getElementById("texts").hidden = true
+}
+
 // Setup
 const scene = new THREE.Scene()
 scene.fog = new THREE.Fog(0x00, 1, 3700)
