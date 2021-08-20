@@ -3,11 +3,6 @@
   src: url('/assets/anb.otf');
 }
 
-@font-face {
-  font-family: 'rb';
-  src: url(/assets/roboto.ttf);
-}
-
 canvas {
   position: fixed;
   top: 0;
@@ -30,7 +25,7 @@ canvas {
 
 h1 {
   margin: 30px;
-  font-family: 'rb';
+  font-family: sans-serif;
 }
 
 a {

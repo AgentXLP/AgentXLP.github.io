@@ -1,8 +1,20 @@
-import * as THREE from './lib/three.module.js'
+import * as THREE from "./lib/three.module.js"
+import { GLTFLoader } from "./lib/model_loader.js"
 
 // Setup
 const scene = new THREE.Scene()
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+scene.fog = new THREE.Fog(0x00, 1, 3700)
+
+window.cameraObj = {
+  fov: 60,
+  rotation: 1.55
+}
+
+const speed = -1.5
+
+const camera = new THREE.PerspectiveCamera(window.cameraObj.fov, window.innerWidth / window.innerHeight, 1, 5000)
+camera.position.x = -800
+camera.position.y = -120
 
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg'),
@@ -10,10 +22,9 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setPixelRatio(window.devicePixelRatio)
 renderer.setSize(window.innerWidth, window.innerHeight)
-camera.position.setZ(5)
 
 //Dynamic scaling for widescreen
-//Taken from maze95-js and modified a bit, you can check out maze95-js on my github.
+//Taken from maze95-js and modified a bit
 window.addEventListener('resize', () =>
 {
   // Update sizes
@@ -29,35 +40,48 @@ window.addEventListener('resize', () =>
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
 
-const ambientLight = new THREE.AmbientLight(0x38423a)
+const ambientLight = new THREE.AmbientLight(0xffffff, 1) //:mmm:
 scene.add(ambientLight)
 
-const dirLight = new THREE.DirectionalLight(0xffffff, 2)
-scene.add(dirLight)
+//Variable for keeping track of library placement
+let increment = 0
 
-const bg = new THREE.TextureLoader().load('bg.png')
-scene.background = bg
+//Loads in a library model
+function loadMap(xIncrement) {
+  const loader = new GLTFLoader()
+  loader.load("./assets/other/library.glb", function (gltf) {
+    gltf.scene.position.y = -250
+    gltf.scene.position.x = xIncrement
+    scene.add(gltf.scene)
+  })
+}
+loadMap()
 
-// Avatar
-
-const tex = new THREE.TextureLoader().load('/assets/img/this_image_is_legal_because_it_is_from_the_render96_pack.png')
-
-window.sphere = {
-  speed: 0.01,
-  zRot: 180,
-  xPos: 2
+//Places a library -949 intervals from the previous one on the X axis
+function loadMapAhead() {
+  increment += -949
+  loadMap(increment)
 }
 
-const geo = new THREE.SphereGeometry(2, 32, 16)
-const object = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ map: tex }))
-object.position.x = window.sphere.xPos
-object.rotation.z = window.sphere.zRot
+//Initial loading
+for (let i = 0; i < 4; i++) {
+  loadMapAhead()
+}
 
-scene.add(object)
+//Spawns in 2 new library geometries in front of you every 10 seconds
+setInterval(function() {
+  for (let i = 0; i < 1; i++) {
+    loadMapAhead()
+  }
+}, 10000)
 
 function animate() {
   requestAnimationFrame(animate)
-  object.rotation.y += window.sphere.speed
+
+  camera.position.x += speed
+  camera.rotation.y = window.cameraObj.rotation
+  camera.fov = window.cameraObj.fov
+  camera.updateProjectionMatrix()
 
   renderer.render(scene, camera)
 }
