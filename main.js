@@ -1,5 +1,5 @@
-import * as THREE from "./lib/three.module.js"
-import { GLTFLoader } from "./lib/model_loader.js"
+import * as THREE from "./assets/lib/three.module.js"
+import { GLTFLoader } from "./assets/lib/model_loader.js"
 
 window.hideText = function() {
   document.getElementById("texts").hidden = true
@@ -14,7 +14,7 @@ window.cameraObj = {
   rotation: 1.55
 }
 
-const speed = -1.5
+const speed = 1.5
 
 const camera = new THREE.PerspectiveCamera(window.cameraObj.fov, window.innerWidth / window.innerHeight, 1, 5000)
 camera.position.x = -800
@@ -82,7 +82,7 @@ setInterval(function() {
 function animate() {
   requestAnimationFrame(animate)
 
-  camera.position.x += speed
+  camera.position.x += -speed
   camera.rotation.y = window.cameraObj.rotation
   camera.fov = window.cameraObj.fov
   camera.updateProjectionMatrix()
