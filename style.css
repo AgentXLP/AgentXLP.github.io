@@ -24,7 +24,7 @@ canvas {
 }
 
 h1 {
-  margin: 30px;
+  margin: 1vh;
   font-family: 'arkit', sans-serif;
 }
 
@@ -35,9 +35,9 @@ button {
   color: white;
   background-color: rgba(0,0,0,0.7);
   border: 3px rgb(10,10,10) solid;
-  width: 220px;
-  height: 60px;
-  font-size: 20px;
+  width: 55vw;
+  height: 10vh;
+  font-size: 2.5vh;
   margin: 0 auto;
   margin-top: 20px;
   transition-duration: 0.3s;
@@ -51,9 +51,9 @@ button:hover {
 button:active {
   background-color: rgba(255,255,255,0.7);
   border: 3px rgb(100,100,100) solid;
-  font-size: 30px;
+  font-size: 3vh;
 }
 
 #hide:active {
-  font-size: 20px;
+  font-size: 3vh;
 }
