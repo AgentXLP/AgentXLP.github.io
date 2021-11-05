@@ -8,6 +8,9 @@ window.redirect = function(site) {
   window.location.href = `https://${site}`
 }
 
+console.log("%cWhat are you doing here? 😳😳", "font-size: 40px;")
+console.log("I jest. I will probably get a better font for the title sooner or later.")
+
 // Setup
 const scene = new THREE.Scene()
 scene.fog = new THREE.Fog(0x00, 1, 3700)
