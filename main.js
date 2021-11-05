@@ -2,14 +2,18 @@ import * as THREE from "./assets/lib/three.module.js"
 import { GLTFLoader } from "./assets/lib/model_loader.js"
 
 window.hideText = function() {
-  document.getElementById("texts").hidden = true
+  document.getElementById("texts").hidden = !document.getElementById("texts").hidden
 }
 window.redirect = function(site) {
   window.location.href = `https://${site}`
 }
 
+window.addEventListener("keydown", e => {
+  if (e.key == "Escape") window.hideText()
+})
+
 console.log("%cWhat are you doing here? 😳😳", "font-size: 40px;")
-console.log("I jest. I will probably get a better font for the title sooner or later.")
+console.log("will probably get a better font for the title sooner or later.")
 
 // Setup
 const scene = new THREE.Scene()
