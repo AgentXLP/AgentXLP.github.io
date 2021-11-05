@@ -13,15 +13,14 @@
     <title>Agent's Site</title>
   </head>
   <body>
-    <canvas id="bg" style="cursor: none;"></canvas>   
-    <main>
-      <div id="texts">
-        <h1>Agent's Site</h1><br>
-        <a id="sm64jslnk">sm64js (Almost there, compilation errors to fix)</a><br><br>
-        <a href="https://maze95.js.org" id="m95lnk">Maze 95 JS</a><br><br><br>
-        <a href="javascript:window.hideText()" id="hide">Background only</a>
-      </div>
-    </main>
+    <div id="texts">
+      <h1>Agent's Site.</h1><br>
+      <button onclick="window.location.href = './projects/sm64js'">sm64js</a>
+        <button onclick="windo.redirect('sm64js.com')">sm64js Multiplayer</a>
+      <button onclick="window.redirect('maze95.js.org')" id="m95lnk">Maze 95 JS</a>
+      <button onclick="window.hideText()" id="hide">Background only</a>
+    </div>
+    <canvas id="bg"></canvas>
     <script type="module" src="/main.js"></script>
     <link rel="stylesheet" href="/style.css">
   </body>

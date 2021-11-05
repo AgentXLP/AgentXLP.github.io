@@ -4,6 +4,9 @@ import { GLTFLoader } from "./assets/lib/model_loader.js"
 window.hideText = function() {
   document.getElementById("texts").hidden = true
 }
+window.redirect = function(site) {
+  window.location.href = `https://${site}`
+}
 
 // Setup
 const scene = new THREE.Scene()
@@ -44,7 +47,7 @@ window.addEventListener('resize', () =>
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 1) //:mmm:
+const ambientLight = new THREE.AmbientLight(0xffffff, 1.2)
 scene.add(ambientLight)
 
 //Variable for keeping track of library placement
@@ -53,7 +56,7 @@ let increment = 0
 //Loads in a library model
 function loadMap(xIncrement) {
   const loader = new GLTFLoader()
-  loader.load("./assets/other/library.glb", function (gltf) {
+  loader.load("./assets/library.glb", function (gltf) {
     gltf.scene.position.y = -250
     gltf.scene.position.x = xIncrement
     scene.add(gltf.scene)

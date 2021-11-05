@@ -1,6 +1,11 @@
 @font-face {
-  font-family: 'anb';
-  src: url('/assets/anb.otf');
+  font-family: 'psans';
+  src: url('/assets/fonts/psans.ttf');
+}
+
+@font-face {
+  font-family: 'arkit';
+  src: url('/assets/fonts/arkit.otf');
 }
 
 canvas {
@@ -9,32 +14,42 @@ canvas {
   left: 0;
 }
 
-
-main {
+#texts {
   font-size: 35px;
   color: white;
-  position: absolute;
-
-}
-
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  margin-top: 250px;
 }
 
 h1 {
   margin: 30px;
-  font-family: sans-serif;
+  font-family: 'arkit', sans-serif;
 }
 
-a {
-  font-family: 'anb';
+button {
+  display: block;
+  font-family: 'psans', sans-serif;
+  font-weight: bolder;
   color: white;
-  text-decoration: underline;
-  margin: 40px;
+  background-color: rgba(0,0,0,0.7);
+  border: 3px rgb(10,10,10) solid;
+  width: 220px;
+  height: 60px;
+  font-size: 20px;
+  margin: 0 auto;
+  margin-top: 20px;
+  transition-duration: 0.3s;
 }
 
-#hide {
-  font-size: 25px;
+button:hover {
+  background-color: rgba(230,230,230,0.7);
+  border: 3px rgb(100,100,100) solid;
+}
+
+button:active {
+  background-color: rgba(255,255,255,0.7);
+  border: 3px rgb(100,100,100) solid;
+  font-size: 30px;
 }
