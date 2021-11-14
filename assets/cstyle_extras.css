@@ -1,0 +1,13 @@
+.header {
+    background-image: linear-gradient(0deg, rgb(89, 116, 152), rgb(192, 205, 222));
+    width: 100%;
+    height: 45px;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-family: Helvetica;
+    font-weight: bold;
+    -webkit-text-stroke: 0.3px rgb(143, 153, 166);
+    font-size: 21px;
+    padding-top: 10px;
+}

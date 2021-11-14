@@ -9,7 +9,7 @@ window.hideText = function() {
 window.redirect = function(site) {
   window.location.href = `https://${site}`
 }
-
+if (window.innerWidth <= 320) window.location.href = "/classic.html"
 window.addEventListener("keydown", e => {
   if (e.key == "Escape") window.hideText()
 })
