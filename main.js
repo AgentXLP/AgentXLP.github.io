@@ -17,13 +17,16 @@ window.addEventListener("keydown", e => {
 console.log("%cWhat are you doing here? 😳😳", "font-size: 40px;")
 console.log("will probably get a better font for the title sooner or later.")
 
-let rand = Math.floor(Math.random() * 3)
+let rand = Math.floor(Math.random() * 4)
 switch (rand) {
   case 1:
     $.css("fullCanvas", "background-image: url('/assets/img/castle.png');")
-    return
+    break
   case 2:
     $.css("fullCanvas", "background-image: url('/assets/img/maze.png');")
+    break
+  case 3:
+    $.css("fullCanvas", "background-image: url('/assets/img/castle.png');")
     break
 }
 if (rand != 0) return
