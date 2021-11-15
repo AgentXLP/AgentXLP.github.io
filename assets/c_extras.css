@@ -11,3 +11,11 @@
     font-size: 21px;
     padding-top: 10px;
 }
+
+body {
+    width: 100%;
+}
+
+#content {
+    width: 320px;
+}
