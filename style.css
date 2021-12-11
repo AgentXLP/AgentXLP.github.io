@@ -67,8 +67,4 @@ button:active {
   width: 100vw;
   height: 100vh;
   background-size: cover; /*This took too long to get working*/
-
-  image-rendering: pixelated;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: crisp-edges;
 }
