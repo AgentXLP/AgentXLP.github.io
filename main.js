@@ -15,7 +15,6 @@ window.addEventListener("keydown", e => {
 })
 
 console.log("%cWhat are you doing here? 😳😳", "font-size: 40px;")
-console.log("will probably get a better font for the title sooner or later.")
 
 let rand = Math.floor(Math.random() * 4)
 switch (rand) {
