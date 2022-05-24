@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <meta content="Agent's Site" property="og:title">
-    <meta content='Hosting stuff here idk' property="og:description">
-    <meta content="https://Agent-11.github.io" property="og:url">
-    <meta content="https://Agent-11.github.io/assets/kek.png" property="og:image">
-    <link rel="icon" type="image/png" href="./favicon.png"/>
-    <meta content="#FDFD3F" data-react-helmet="true" name="theme-color">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agent's Site</title>
-  </head>
-  <body>
-    <div id="fullCanvas">
-      <canvas id="bg"></canvas>
-      <script type="module" src="/main.js"></script>
-      <link rel="stylesheet" href="/style.css">
-      <div id="texts">
-        <h1>Agent's Site.</h1>
-        <button onclick="window.location.href = './projects/sm64js'">sm64js</a>
-          <button onclick="window.redirect('sm64js.com')">sm64js Multiplayer</a>
-        <button onclick="window.redirect('maze95.js.org')" id="m95lnk">Maze 95 JS</a>
-        <button onclick="window.hideText()" id="hide">Background only (Press ESC to toggle)</a>
-      </div>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body style="background-image: url('assets/water.png');">
+    <img src="assets/gordon.jpeg" width="400" id="title">
+    <br>
+    <br>
+    <div class="box">
+        <div id="boxmain">
+            <button onclick='window.location.href = "/sm64js/"'>sm64js</button>
+            <br>
+            <br>
+            <br>
+            <br>
+            <button onclick='window.location.href = "https:\/\/sm64js.com"'>sm64js Multiplayer</button>
+            <br>
+            <br>
+            <br>
+            <br>
+            <button onclick='window.location.href = "https:\/\/maze95.js.org/new_engine"'>Maze 95 JS</button>
+    
+            <p class="footer">Agent X</p>
+        </div>
+        <div id="boxplay" hidden>
+            <button>Test</button>
+        </div>
     </div>
-  </body>
+</body>
 </html>

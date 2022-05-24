@@ -1,0 +1,81 @@
+@font-face {
+    font-family: "text";
+    src: url("assets/sm64.ttf");
+}
+
+/* sm64js */
+@keyframes sm64title{
+    0% { transform: scale(0.2, 0.3); }
+    8% { transform: scale(1.4, 1.3); }
+    10% { transform: scale(0.8, 1.1); }
+    12% { transform: scale(1.1, 1.0); }
+    14% { transform: scale(1.0, 1.0); }
+    15% { transform: scale(0.8, 1.2); }
+    16% { transform: scale(1.0, 1.0); }
+    17% { transform: scale(0.9, 1.1); }
+    18% { transform: scale(1.0, 1.0); }
+    100% { transform: scale(1.0, 1.0); }
+}
+
+@keyframes fade {
+    0% { opacity: 0; }
+    100% { opacity: 100; }
+}
+
+body {
+    font-family: "text";
+
+    position: relative;
+    top: 0; 
+    left: 0;
+  
+    width: 100vw;
+    height: 100vh;
+    background-size: cover; /*This took too long to get working*/
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    overflow: hidden;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+button {
+    font-family: "text";
+    font-size: 1.5rem;
+
+    width: 400px;
+    height: 50px;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin-top: 40px;
+}
+
+#title {
+    animation: sm64title 2.2s linear;
+}
+
+.box {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 450px;
+    height: 500px;
+}
+
+.footer {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    margin-left: 10px;
+    color: gray;
+}

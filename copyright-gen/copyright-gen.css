@@ -1,0 +1,33 @@
+@font-face {
+    font-family: "century";
+    src: url("/assets/centgothic.ttf");
+}
+
+@font-face {
+    font-family: "nin";
+    src: url("/assets/nintendo.otf");
+}
+
+body {
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+span {
+    font-family: "century";
+    font-size: 100px;
+    background-image: linear-gradient(180deg, #0018DE, #0018DE, #00D5FF, #BDFFFF, #0062E6, #00CDF6, #00D5D5);
+    /* pixel by pixel */
+    /*background-image: linear-gradient(180deg, #0039EE, #0073FF, #00A4FF, #00CDFF, #00FFFF, #08FFFF, #52FFFF, #BDFFFF, #7BBDFF, #0073FF, #009CFF, #00B4FF, #00D5FF, #00DEF6);*/
+    background-clip: text;
+    color: transparent;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+}
+
+#company {
+    font-family: "nin";
+}
