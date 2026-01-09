@@ -1,0 +1,20 @@
+body {
+    background: rgb(255, 245, 230);
+    color: black;
+    font-family: system-ui, sans-serif;
+    padding: 20px;
+}
+
+.controls {
+    margin-bottom: 16px;
+}
+
+input {
+    width: 80px;
+    margin-right: 10px;
+}
+
+canvas {
+    background: transparent;
+    display: block;
+}
