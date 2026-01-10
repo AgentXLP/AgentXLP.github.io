@@ -21,6 +21,10 @@ const hurtSound = new Audio("decrement_health.ogg");
 hurtSound.preload = "auto";
 hurtSound.load();
 
+const lowSound = new Audio("low_health.ogg");
+lowSound.preload = "auto";
+lowSound.load();
+
 let displayedValue = parseFloat(document.getElementById("max").value);
 let targetValue = displayedValue;
 let lastTime = 0;
@@ -182,7 +186,11 @@ function animate(timestamp) {
     if (Math.floor(prevDisplayedValue) < Math.floor(displayedValue)) {
         healSound.cloneNode().play();
     } else if (Math.floor(prevDisplayedValue) > Math.floor(displayedValue)) {
-        hurtSound.cloneNode().play();
+        if (displayedValue <= 1) {
+            lowSound.cloneNode().play();
+        } else {
+            hurtSound.cloneNode().play();
+        }
     }
 
     drawHearts(displayedValue);
@@ -212,8 +220,8 @@ function updateScale() {
 function updateValues() {
     let current = document.getElementById("current");
     let max = document.getElementById("max");
-    current.value = String(clamp(parseFloat(current.value), 0, 40));
     max.value = String(clamp(parseInt(max.value), 0, 40));
+    current.value = String(clamp(parseFloat(current.value), 0, parseInt(max.value)));
     render();
 }
 
