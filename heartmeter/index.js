@@ -17,10 +17,18 @@ const healSound = new Audio("increment_health.ogg");
 healSound.preload = "auto";
 healSound.load();
 
+const hurtSound = new Audio("decrement_health.ogg");
+hurtSound.preload = "auto";
+hurtSound.load();
+
 let displayedValue = parseFloat(document.getElementById("max").value);
 let targetValue = displayedValue;
 let lastTime = 0;
 let scale = 0.5;
+
+function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+}
 
 function createColoredHeart(colorRGBA) {
     const w = heartImg.width;
@@ -173,6 +181,8 @@ function animate(timestamp) {
 
     if (Math.floor(prevDisplayedValue) < Math.floor(displayedValue)) {
         healSound.cloneNode().play();
+    } else if (Math.floor(prevDisplayedValue) > Math.floor(displayedValue)) {
+        hurtSound.cloneNode().play();
     }
 
     drawHearts(displayedValue);
@@ -186,7 +196,7 @@ function render() {
     let current = parseFloat(document.getElementById("current").value);
     let max = parseInt(document.getElementById("max").value);
 
-    if (current < 0 || current > 40) current = 0;
+    current = clamp(current, 0, 40);
     if (max <= 0 || max > 40) max = Math.ceil(current);
 
     current = Math.min(current, max);
@@ -197,6 +207,14 @@ function render() {
 function updateScale() {
     scale = parseFloat(document.getElementById("scale").value);
     document.getElementById("display").innerText = scale;
+}
+
+function updateValues() {
+    let current = document.getElementById("current");
+    let max = document.getElementById("max");
+    current.value = String(clamp(parseFloat(current.value), 0, 40));
+    max.value = String(clamp(parseInt(max.value), 0, 40));
+    render();
 }
 
 window.onload = () => {
