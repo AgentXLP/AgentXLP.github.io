@@ -10,7 +10,7 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 const heartImg = new Image();
-heartImg.src = "heart.png";
+heartImg.src = "/heartmeter/heart.png";
 heartImg.onload = render;
 
 const healSound = new Audio("increment_health.ogg");
