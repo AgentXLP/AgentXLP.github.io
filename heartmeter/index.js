@@ -10,7 +10,7 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 const heartImg = new Image();
-heartImg.src = "/heartmeter/heart.png";
+heartImg.src = "heart.png";
 heartImg.onload = render;
 
 const healSound = new Audio("increment_health.ogg");
@@ -199,6 +199,8 @@ function updateScale() {
     document.getElementById("display").innerText = scale;
 }
 
-updateScale();
-render();
-requestAnimationFrame(animate);
+window.onload = () => {
+    updateScale();
+    render();
+    requestAnimationFrame(animate);
+}
