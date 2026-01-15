@@ -1,6 +1,10 @@
-const MAX_PER_ROW = 20;
+const TOTK_MAX_PER_ROW = 20;
+const BOTW_MAX_PER_ROW = 15;
 const SPACING = 24;
 const SPEED = 6;
+
+const TOTK_MAX_HEARTS = 40;
+const BOTW_MAX_HEARTS = 30;
 
 const TOTK_COLOR = [248, 108, 50, 255];
 const BOTW_COLOR = [253, 58, 56, 255];
@@ -12,6 +16,10 @@ const ctx = canvas.getContext("2d");
 const heartImg = new Image();
 heartImg.src = "heart.png";
 heartImg.onload = render;
+
+const brokenHeartImg = new Image();
+brokenHeartImg.src = "heart_broken.png";
+brokenHeartImg.onload = render;
 
 const healSound = new Audio("increment_health.ogg");
 healSound.preload = "auto";
@@ -32,6 +40,14 @@ let scale = 0.5;
 
 function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
+}
+
+function isTotkStyled() {
+    return document.getElementById("style").value == "0"
+}
+
+function getMaxHearts() {
+    return isTotkStyled() ? TOTK_MAX_HEARTS : BOTW_MAX_HEARTS;
 }
 
 function createColoredHeart(colorRGBA) {
@@ -113,6 +129,28 @@ function createPartialHeart(fraction, filledHeart, emptyHeart) {
     return temp;
 }
 
+function createBrokenHeart() {
+    const w = brokenHeartImg.width;
+    const h = brokenHeartImg.height;
+
+    const temp = document.createElement("canvas");
+    temp.width = w;
+    temp.height = h;
+    const tctx = temp.getContext("2d");
+
+    // fill solid color
+    tctx.clearRect(0, 0, w, h);
+    tctx.fillStyle = `rgba(200, 200, 200, ${200 / 255})`;
+    tctx.fillRect(0, 0, w, h);
+
+    // use heart alpha as mask
+    tctx.globalCompositeOperation = "destination-in";
+    tctx.drawImage(brokenHeartImg, 0, 0);
+    tctx.globalCompositeOperation = "source-over";
+
+    return temp;
+}
+
 function drawHearts(value) {
     let max = parseInt(document.getElementById("max").value);
     if (max <= 0 || max > 40) { max = Math.ceil(value); }
@@ -126,8 +164,7 @@ function drawHearts(value) {
     const remainder = value - full;
     const fraction = Math.max(0, Math.min(1, remainder));
 
-    const style = document.getElementById("style").value;
-    const filledHeart = createColoredHeart(style == "0" ? TOTK_COLOR : BOTW_COLOR);
+    const filledHeart = createColoredHeart(isTotkStyled() ? TOTK_COLOR : BOTW_COLOR);
     const emptyHeart = createEmptyHeart();
 
     const hearts = [];
@@ -147,9 +184,19 @@ function drawHearts(value) {
         hearts.push(emptyHeart);
     }
 
+    if (isTotkStyled()) {
+        // broken hearts
+        const broken = parseInt(document.getElementById("broken").value);
+        for (let i = hearts.length - 1; i >= value - broken; i--) {
+            hearts[i] = createBrokenHeart();
+        }
+    }
+
     // layout
-    const cols = Math.min(hearts.length, MAX_PER_ROW);
-    const rows = Math.ceil(hearts.length / MAX_PER_ROW);
+    const maxPerRow = isTotkStyled() ? TOTK_MAX_PER_ROW : BOTW_MAX_PER_ROW;
+
+    const cols = Math.min(hearts.length, maxPerRow);
+    const rows = Math.ceil(hearts.length / maxPerRow);
 
     canvas.width = (cols * w + (cols - 1) * SPACING) * scale;
     canvas.height = (rows * h + (rows - 1) * SPACING) * scale;
@@ -158,8 +205,8 @@ function drawHearts(value) {
 
     // draw these hearts yo
     hearts.forEach((heart, i) => {
-        const row = Math.floor(i / MAX_PER_ROW);
-        const col = i % MAX_PER_ROW;
+        const row = Math.floor(i / maxPerRow);
+        const col = i % maxPerRow;
         const x = col * (w + SPACING) * scale;
         const y = row * (h + SPACING) * scale;
         ctx.drawImage(heart, x, y, heartImg.width * scale, heartImg.height * scale);
@@ -199,13 +246,15 @@ function animate(timestamp) {
 }
 
 function render() {
-    if (!heartImg.complete) return;
+    if (!heartImg.complete) { return; }
+    if (!brokenHeartImg.complete) { return; }
 
     let current = parseFloat(document.getElementById("current").value);
     let max = parseInt(document.getElementById("max").value);
 
-    current = clamp(current, 0, 40);
-    if (max <= 0 || max > 40) max = Math.ceil(current);
+    const gameMax = getMaxHearts();
+    current = clamp(current, 0, gameMax);
+    if (max <= 0 || max > gameMax) max = Math.ceil(current);
 
     current = Math.min(current, max);
 
@@ -220,13 +269,31 @@ function updateScale() {
 function updateValues() {
     let current = document.getElementById("current");
     let max = document.getElementById("max");
-    max.value = String(clamp(parseInt(max.value), 0, 40));
+    let broken = document.getElementById("broken");
+    max.value = String(clamp(parseInt(max.value), 0, getMaxHearts()));
     current.value = String(clamp(parseFloat(current.value), 0, parseInt(max.value)));
+    broken.value = String(clamp(parseInt(broken.value), 0, parseInt(max.value)));
+    
+    broken.disabled = document.getElementById("style").value != "0";
+    
     render();
+}
+
+function exportToPNG() {
+    canvas.toBlob(function(blob) {
+        const link = document.createElement('a');
+        link.download = "heartmeter.png";
+        link.href = URL.createObjectURL(blob);
+        link.click();
+
+        link.onload = function() {
+            URL.revokeObjectURL(link.href);
+        };
+    }, "image/png")
 }
 
 window.onload = () => {
     updateScale();
-    render();
+    updateValues();
     requestAnimationFrame(animate);
 }
