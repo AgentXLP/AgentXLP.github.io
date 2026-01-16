@@ -38,6 +38,8 @@ let targetValue = displayedValue;
 let lastTime = 0;
 let scale = 0.5;
 
+let prevBroken = parseInt(document.getElementById("broken").value);
+
 function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
 }
@@ -152,7 +154,12 @@ function createBrokenHeart() {
 }
 
 function drawHearts(value) {
+    const brokenValue = parseInt(document.getElementById("broken").value);
+
     let max = parseInt(document.getElementById("max").value);
+    if (isTotkStyled()) {
+        max -= brokenValue;
+    }
     if (max <= 0 || max > 40) { max = Math.ceil(value); }
 
     value = Math.min(value, max);
@@ -185,10 +192,8 @@ function drawHearts(value) {
     }
 
     if (isTotkStyled()) {
-        // broken hearts
-        const broken = parseInt(document.getElementById("broken").value);
-        for (let i = hearts.length - 1; i >= value - broken; i--) {
-            hearts[i] = createBrokenHeart();
+        for (let i = 0; i < brokenValue; i++) {
+            hearts.push(createBrokenHeart());
         }
     }
 
@@ -233,7 +238,7 @@ function animate(timestamp) {
     if (Math.floor(prevDisplayedValue) < Math.floor(displayedValue)) {
         healSound.cloneNode().play();
     } else if (Math.floor(prevDisplayedValue) > Math.floor(displayedValue)) {
-        if (displayedValue <= 1) {
+        if (displayedValue < 2) {
             lowSound.cloneNode().play();
         } else {
             hurtSound.cloneNode().play();
@@ -270,10 +275,21 @@ function updateValues() {
     let current = document.getElementById("current");
     let max = document.getElementById("max");
     let broken = document.getElementById("broken");
-    max.value = String(clamp(parseInt(max.value), 0, getMaxHearts()));
-    current.value = String(clamp(parseFloat(current.value), 0, parseInt(max.value)));
-    broken.value = String(clamp(parseInt(broken.value), 0, parseInt(max.value)));
-    
+
+    const maxValue = clamp(parseInt(max.value), 0, getMaxHearts());
+    const brokenValue = clamp(parseInt(broken.value), 0, maxValue);
+    const currentValue = clamp(parseFloat(current.value), 0, maxValue - brokenValue);
+    max.value = String(maxValue);
+    max.max = String(maxValue);
+    current.value = String(currentValue);
+    current.max = String(maxValue - brokenValue);
+    broken.value = String(brokenValue);
+    broken.max = String(maxValue);
+    if (prevBroken < brokenValue) {
+        hurtSound.cloneNode().play();
+    }
+    prevBroken = brokenValue;
+
     broken.disabled = document.getElementById("style").value != "0";
     
     render();
@@ -289,7 +305,7 @@ function exportToPNG() {
         link.onload = function() {
             URL.revokeObjectURL(link.href);
         };
-    }, "image/png")
+    }, "image/png");
 }
 
 window.onload = () => {
