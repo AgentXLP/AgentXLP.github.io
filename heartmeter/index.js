@@ -238,7 +238,7 @@ function animate(timestamp) {
     if (Math.floor(prevDisplayedValue) < Math.floor(displayedValue)) {
         healSound.cloneNode().play();
     } else if (Math.floor(prevDisplayedValue) > Math.floor(displayedValue)) {
-        if (displayedValue < 2) {
+        if (displayedValue <= 1) {
             lowSound.cloneNode().play();
         } else {
             hurtSound.cloneNode().play();
