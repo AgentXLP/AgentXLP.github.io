@@ -280,7 +280,7 @@ function updateValues() {
     const brokenValue = clamp(parseInt(broken.value), 0, maxValue);
     const currentValue = clamp(parseFloat(current.value), 0, maxValue - brokenValue);
     max.value = String(maxValue);
-    max.max = String(maxValue);
+    max.max = String(getMaxHearts());
     current.value = String(currentValue);
     current.max = String(maxValue - brokenValue);
     broken.value = String(brokenValue);
