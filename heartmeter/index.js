@@ -276,9 +276,12 @@ function updateValues() {
     let max = document.getElementById("max");
     let broken = document.getElementById("broken");
 
-    const maxValue = clamp(parseInt(max.value), 0, getMaxHearts());
-    const brokenValue = clamp(parseInt(broken.value), 0, maxValue);
-    const currentValue = clamp(parseFloat(current.value), 0, maxValue - brokenValue);
+    let maxValue = clamp(parseInt(max.value), 0, getMaxHearts());
+    if (!Number.isFinite(maxValue)) { maxValue = 0; }
+    let brokenValue = clamp(parseInt(broken.value), 0, maxValue);
+    if (!Number.isFinite(brokenValue)) { brokenValue = 0; }
+    let currentValue = clamp(parseFloat(current.value), 0, maxValue - brokenValue);
+    if (!Number.isFinite(currentValue)) { currentValue = 0; }
     max.value = String(maxValue);
     max.max = String(getMaxHearts());
     current.value = String(currentValue);
