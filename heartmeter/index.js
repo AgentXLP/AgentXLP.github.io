@@ -25,13 +25,17 @@ const healSound = new Audio("increment_health.ogg");
 healSound.preload = "auto";
 healSound.load();
 
-const hurtSound = new Audio("decrement_health.ogg");
+const hurtSound = new Audio("hurt.ogg");
 hurtSound.preload = "auto";
 hurtSound.load();
 
 const lowSound = new Audio("low_health.ogg");
 lowSound.preload = "auto";
 lowSound.load();
+
+const breakSound = new Audio("decrement_health.ogg");
+breakSound.preload = "auto";
+breakSound.load();
 
 let displayedValue = parseFloat(document.getElementById("max").value);
 let targetValue = displayedValue;
@@ -235,13 +239,18 @@ function animate(timestamp) {
         displayedValue += step;
     }
 
+    const max = parseInt(document.getElementById("max").value);
     if (Math.floor(prevDisplayedValue) < Math.floor(displayedValue)) {
         healSound.cloneNode().play();
     } else if (Math.floor(prevDisplayedValue) > Math.floor(displayedValue)) {
         if (displayedValue <= 1) {
             lowSound.cloneNode().play();
         } else {
-            hurtSound.cloneNode().play();
+            if (displayedValue < max) {
+                hurtSound.cloneNode().play();
+            } else {
+                breakSound.cloneNode().play();
+            }
         }
     }
 
@@ -289,7 +298,7 @@ function updateValues() {
     broken.value = String(brokenValue);
     broken.max = String(maxValue);
     if (prevBroken < brokenValue) {
-        hurtSound.cloneNode().play();
+        breakSound.cloneNode().play();
     }
     prevBroken = brokenValue;
 
