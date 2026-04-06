@@ -308,6 +308,7 @@ function updateValues() {
     prevBroken = brokenValue;
     if (prevMax < maxValue) {
         newHeartSound.cloneNode().play();
+        current.value = max.value;
     }
     prevMax = maxValue;
 
