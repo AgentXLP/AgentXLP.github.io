@@ -37,12 +37,17 @@ const breakSound = new Audio("decrement_health.ogg");
 breakSound.preload = "auto";
 breakSound.load();
 
+const newHeartSound = new Audio("increment_max_health.ogg");
+newHeartSound.preload = "auto";
+newHeartSound.load();
+
 let displayedValue = parseFloat(document.getElementById("max").value);
 let targetValue = displayedValue;
 let lastTime = 0;
 let scale = 0.5;
 
 let prevBroken = parseInt(document.getElementById("broken").value);
+let prevMax = parseInt(document.getElementById("max").value);
 
 function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
@@ -301,6 +306,10 @@ function updateValues() {
         breakSound.cloneNode().play();
     }
     prevBroken = brokenValue;
+    if (prevMax < maxValue) {
+        newHeartSound.cloneNode().play();
+    }
+    prevMax = maxValue;
 
     broken.disabled = document.getElementById("style").value != "0";
     
