@@ -1,6 +1,6 @@
 const TOTK_MAX_PER_ROW = 20;
 const BOTW_MAX_PER_ROW = 15;
-const SPACING = 24;
+const SPACING = 25;
 const SPEED = 6;
 
 const TOTK_MAX_HEARTS = 40;
@@ -8,7 +8,7 @@ const BOTW_MAX_HEARTS = 30;
 
 const TOTK_COLOR = [248, 108, 50, 255];
 const BOTW_COLOR = [253, 58, 56, 255];
-const EMPTY_COLOR = [0, 0, 0, 200];
+const EMPTY_COLOR = [0, 0, 0, 175];
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
